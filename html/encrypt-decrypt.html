@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encrypt with me</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playwrite+IN+Guides&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: "Inter", sans-serif;
+            font-weight: 100;
+            color: white;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background-image: url('backgr.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .content {
+            text-align: center;
+            z-index: 1;
+        }
+        
+        .message {
+            font-size: 40px;
+            margin-bottom: 30px;
+            color: #a72188;
+            opacity: 0.9;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .btn-shine {
+            display: inline-block;
+            padding: 12px 48px;
+            color: #ff00c3;
+            background: linear-gradient(to right, #a72188 0, #ffffff 10%, #a72188 20%);
+            background-position: 0;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 3s infinite linear;
+            font-weight: 600;
+            font-size: 16px;
+            text-decoration: none;
+            white-space: nowrap;
+            font-family: "Inter", sans-serif;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-size: 30px;
+        }
+        
+        .btn-shine:hover {
+            border-color: rgba(255, 255, 255, 0.7);
+            transform: scale(1.05);
+        }
+        
+        @keyframes shine {
+            0% { background-position: 0; }
+            60% { background-position: 180px; }
+            100% { background-position: 180px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <div class="message">
+            Do you want to learn encryption?
+        </div>
+        <a href="page2.html" class="btn-shine">Let's begin</a>
+    </div>
+</body>
+</html>

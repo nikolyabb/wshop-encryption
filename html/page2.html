@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Encrypting</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link rel="stylesheet" href="new.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playwrite+IN+Guides&display=swap" rel="stylesheet">
+
+<style>
+
+  .input::placeholder {
+    color: #a72188; 
+    font-size: 25px; 
+         
+}
+       
+#encryption input {
+    width: 450px; 
+    padding: 15px;
+    font-size: 25px;
+}
+
+        .input {
+            border-radius: 5px;
+            background-color:transparent;
+            color:#a72188; 
+        }
+
+      
+</style>
+</head>
+
+
+<body>
+
+<div class="img-background">
+    <img src="backgr.jpg" alt="Fallback image">
+</div>
+
+<div class="content">
+
+<form id="encryption">
+
+<input
+    type="range"
+    id="int-range"
+    name="info1"
+    min="-4"
+    max="4"
+    step="1"
+    value="0"
+>
+
+<output id="int-range-output" class="instruction">
+0
+</output>
+
+<input
+    type="text"
+    class="input"
+    name="info"
+    placeholder="Type the word you'd like to encrypt"
+    autocomplete="off"
+>
+
+
+
+<br>
+
+<input
+    type="text"
+    id="resultField"
+    class="input"
+    placeholder=""
+    disabled
+    autocomplete="off"
+>
+    <div class="spacer"></div>
+<button type="submit">
+    Confirm
+     
+     
+</button>
+
+</form>
+
+<div class ='author'>
+    Desgined by Aleksei Novashov, 2026 (c) for Insight School
+</div>
+</body>
+
+
+
+
+
+
+<script>
+
+const slider = document.getElementById('int-range');
+const out = document.getElementById('int-range-output');
+
+slider.addEventListener('input', () => {
+    out.textContent = slider.value;
+});
+
+
+let element = document.querySelector('input[type="text"]');
+
+const colors = ['red', 'blue', 'green', 'purple', 'orange'];
+let colorIndex = 0;
+
+document.body.addEventListener('input', function(e) {
+    colorIndex = (colorIndex + 1) % colors.length;
+    element.style.color = colors[colorIndex];
+});
+
+
+
+
+function caesarCipher(text, shift) {
+
+    let result = '';
+
+    shift = ((shift % 26) + 26) % 26;
+
+    for (let i = 0; i < text.length; i++) {
+
+        let char = text[i];
+
+        if (char.match(/[a-z]/i)) {
+
+            let code = text.charCodeAt(i);
+
+            if (code >= 65 && code <= 90) {
+                char = String.fromCharCode(((code - 65 + shift) % 26) + 65);
+            }
+
+            else if (code >= 97 && code <= 122) {
+                char = String.fromCharCode(((code - 97 + shift) % 26) + 97);
+            }
+        }
+
+        result += char;
+    }
+
+    return result;
+}
+
+
+const form = document.forms.encryption;
+
+form.addEventListener("submit", function(e) {
+
+    e.preventDefault();
+
+    let numberElement = document.querySelector('int-range');
+
+    let input = document.querySelector('input');
+
+    let inputField = document.querySelector('input[name="info"]');
+
+    let resultField = document.getElementById('resultField');
+
+    let link = document.createElement('a');
+
+    let encryptedText = caesarCipher(inputField.value, out.textContent);
+
+    resultField.value = encryptedText;
+    resultField.style.color = '#a72188';
+
+
+    let continuationText = document.getElementById('continuetext');
+
+    if (!continuationText) {
+
+        continuationText = document.createElement('div');
+
+        continuationText.innerHTML = 'Click here if you want to practice your decryption';
+
+        continuationText.id = 'continuetext';
+
+        continuationText.style.color = '#a72188';
+        
+        continuationText.style.display = 'flex';
+
+        continuationText.style.justifyContent = 'center';
+
+        continuationText.style.fontSize = '25px';
+
+        document.body.appendChild(continuationText);
+    }
+
+
+    let continuationButton = document.getElementById('continuebutton');
+
+    if (!continuationButton) {
+
+        let link = document.createElement('a');
+
+        link.href = `page3.html?shift=${out.textContent}`;
+
+        link.style.textDecoration = 'none';
+
+        continuationButton = document.createElement('button');
+
+        continuationButton.innerHTML = 'Decrypt';
+
+        continuationButton.style.color = '#a72188';
+
+        continuationButton.id = 'continuebutton';
+
+        continuationButton.type = 'button';
+
+        continuationButton.style.display = 'flex';
+
+        continuationButton.style.justifyContent = 'center';
+
+        document.body.appendChild(continuationButton);
+
+        link.appendChild(continuationButton);
+
+        document.body.appendChild(link);
+    }
+
+});
+
+</script>
+
+</html>
