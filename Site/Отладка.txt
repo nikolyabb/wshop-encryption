@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Best site in the world</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <div class="wrapper">
+        <header class="container">
+            <span class="logo">Yggdrasil</span>
+            <nav>
+                <ul>
+                    <li class="active"><a href="#">Hús</a></li>
+                    <li><a href="#">soon</a></li>
+                    <li class="btn"><a href="#">um Okkur</a></li>
+                </ul>
+            </nav>
+
+            <style>
+                body {
+                    background-image: url('https://i.imgur.com/Leci3br.png');
+                    background-size: cover;
+                    background-repeat: no-repeat;
+                    background-position: center;
+                    background-attachment: fixed;
+                    margin: 0;
+                    min-height: 100vh;
+                }
+            </style>
+        </header>
+
+        <div class="hero_container">
+            <div class="hero--info"></div>
+            <h2>Óðinn verndar þig</h2>
+            <h1>Hlið níu heima eru opin fyrir þér</h1>
+            <p>Ég mun verða leiðsögumaður þinn</p>
+            <button class="btn">Detalis</button>
+        </div>
+    </div>
+
+    <!-- Кликабельное изображение -->
+    <div style="position: relative; display: inline-block;">
+        <img id="clickable-image" src="img/Yggdrasil.png" alt="Yggdrasil Map" usemap="#image-map">
+        <map name="image-map">
+            <!-- Здесь будут области -->
+        </map>
+    </div>
+
+    <!-- Добавляем JavaScript код для карты -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const image = document.getElementById('clickable-image');
+            const map = document.querySelector('map[name="image-map"]');
+            
+            // Области для клика (координаты нужно подобрать под ваше изображение)
+            const areas = [
+                { 
+                    name: 'ASGARD',
+                    coords: [100, 50, 200, 150], // x1,y1,x2,y2
+                    url: '#'
+                },
+                { 
+                    name: 'MIDGARD',
+                    coords: [300, 50, 100, 150],
+                    url: '#'
+                },
+                { 
+                    name: 'MUSPELHEIM',
+                    coords: [462, 100, 100, 200],
+                    url: '#'
+                },
+                { 
+                    name: 'VANAHEIM',
+                    coords: [150, 300, 250, 400],
+                    url: '#'
+                },
+                { 
+                    name: 'HELHEIM',
+                    coords: [400, 400, 500, 500],
+                    url: '#'
+                }
+            ];
+
+            // Создаем области на карте
+            areas.forEach(area => {
+                const areaElement = document.createElement('area');
+                areaElement.shape = 'rect';
+                areaElement.coords = area.coords.join(',');
+                areaElement.alt = area.name;
+                areaElement.href = area.url;
+                map.appendChild(areaElement);
+            });
+            
+            console.log('Карта миров Yggdrasil активирована!');
+
+            // === ДОБАВЛЕННЫЙ КОД: ЦВЕТНЫЕ РАМКИ И ОТЛАДКА ===
+            
+            // 1. Создаем стили для оверлеев
+            const style = document.createElement('style');
+            style.textContent = `
+                .ygg-overlay {
+                    position: absolute;
+                    border: 2px solid;
+                    pointer-events: none;
+                    z-index: 1000;
+                    box-sizing: border-box;
+                    transition: all 0.3s ease;
+                    opacity: 0.7;
+                }
+                
+                .ygg-overlay:hover {
+                    opacity: 1;
+                    box-shadow: 0 0 10px currentColor;
+                }
+                
+                .ygg-label {
+                    position: absolute;
+                    background: rgba(0,0,0,0.8);
+                    color: white;
+                    padding: 2px 6px;
+                    font-size: 11px;
+                    border-radius: 3px;
+                    pointer-events: none;
+                    z-index: 1001;
+                    font-family: Arial, sans-serif;
+                    white-space: nowrap;
+                    border: 1px solid;
+                }
+                
+                #ygg-debug-panel {
+                    position: fixed;
+                    bottom: 10px;
+                    right: 10px;
+                    background: rgba(0,0,0,0.9);
+                    color: white;
+                    padding: 10px;
+                    border-radius: 5px;
+                    font-family: monospace;
+                    font-size: 12px;
+                    z-index: 2000;
+                    max-width: 300px;
+                    border: 2px solid gold;
+                    display: none;
+                }
+                
+                .ygg-coord-item {
+                    margin: 3px 0;
+                    padding: 3px;
+                    border-bottom: 1px solid #444;
+                    cursor: pointer;
+                }
+                
+                .ygg-coord-item:hover {
+                    background: rgba(255,255,255,0.1);
+                }
+                
+                .debug-dot {
+                    position: absolute;
+                    width: 8px;
+                    height: 8px;
+                    background: red;
+                    border-radius: 50%;
+                    pointer-events: none;
+                    z-index: 999;
+                }
+                
+                .selection-rect {
+                    position: absolute;
+                    border: 2px dashed #00ff00;
+                    background: rgba(0, 255, 0, 0.1);
+                    pointer-events: none;
+                    z-index: 1002;
+                }
+            `;
+            document.head.appendChild(style);
+            
+            // 2. Создаем контейнер для оверлеев
+            const overlayContainer = document.createElement('div');
+            overlayContainer.id = 'ygg-overlay-container';
+            overlayContainer.style.position = 'absolute';
+            overlayContainer.style.top = '0';
+            overlayContainer.style.left = '0';
+            overlayContainer.style.width = '100%';
+            overlayContainer.style.height = '100%';
+            overlayContainer.style.pointerEvents = 'none';
+            overlayContainer.style.zIndex = '1000';
+            
+            // Помещаем контейнер поверх изображения
+            image.parentNode.style.position = 'relative';
+            image.parentNode.appendChild(overlayContainer);
+            
+            // 3. Цвета для каждого мира
+            const areaColors = {
+                'ASGARD': '#FFD700',      // золотой
+                'MIDGARD': '#00FF00',     // зеленый
+                'MUSPELHEIM': '#FF4500',  // огненный
+                'VANAHEIM': '#00BFFF',    // голубой
+                'HELHEIM': '#800080',     // фиолетовый
+                'ALFHEIM': '#FF69B4',     // розовый
+                'NIDAVELLIR': '#A52A2A',  // коричневый
+                'JOTUNHEIM': '#4682B4',   // стальной
+                'NIFLHEIM': '#C0C0C0'     // серебряный
+            };
+            
+            // 4. Создаем цветные рамки для каждой области
+            areas.forEach(area => {
+                const color = areaColors[area.name] || '#FFFFFF';
+                
+                // Создаем рамку
+                const overlay = document.createElement('div');
+                overlay.className = 'ygg-overlay';
+                overlay.style.borderColor = color;
+                overlay.style.left = area.coords[0] + 'px';
+                overlay.style.top = area.coords[1] + 'px';
+                overlay.style.width = (area.coords[2] - area.coords[0]) + 'px';
+                overlay.style.height = (area.coords[3] - area.coords[1]) + 'px';
+                
+                // Создаем метку
+                const label = document.createElement('div');
+                label.className = 'ygg-label';
+                label.textContent = area.name;
+                label.style.color = color;
+                label.style.borderColor = color;
+                label.style.left = (area.coords[0]) + 'px';
+                label.style.top = (area.coords[1] - 20) + 'px';
+                
+                // Добавляем в контейнер
+                overlayContainer.appendChild(overlay);
+                overlayContainer.appendChild(label);
+            });
+            
+            // 5. Панель отладки
+            const debugPanel = document.createElement('div');
+            debugPanel.id = 'ygg-debug-panel';
+            debugPanel.innerHTML = `
+                <div style="color: gold; font-weight: bold;">🎯 Режим определения областей</div>
+                <div style="font-size: 10px; margin-bottom: 5px; color: #0ff;">1. Кликните в ЛЕВЫЙ ВЕРХНИЙ угол</div>
+                <div style="font-size: 10px; margin-bottom: 5px; color: #0ff;">2. Кликните в ПРАВЫЙ НИЖНИЙ угол</div>
+                <div id="ygg-coord-list" style="max-height: 200px; overflow-y: auto; margin-top: 10px;"></div>
+                <div style="margin-top: 10px;">
+                    <button id="ygg-start-btn" style="padding: 5px 10px; background: #4CAF50; color: white; border: none; border-radius: 3px; cursor: pointer;">Начать выделение</button>
+                    <button id="ygg-clear-btn" style="padding: 5px 10px; background: #f44336; color: white; border: none; border-radius: 3px; cursor: pointer; margin-left: 5px;">Очистить</button>
+                </div>
+            `;
+            document.body.appendChild(debugPanel);
+            
+            // 6. ПЕРЕМЕННЫЕ ДЛЯ ВЫДЕЛЕНИЯ ОБЛАСТИ
+            let isSelecting = false;
+            let startX = 0;
+            let startY = 0;
+            let selectionRect = null;
+            let clickCount = 0;
+            
+            // 7. ФУНКЦИЯ ДЛЯ ПОЛУЧЕНИЯ КООРДИНАТ В ФОРМАТЕ [x1, y1, x2, y2]
+            function startAreaSelection() {
+                isSelecting = true;
+                clickCount = 0;
+                startX = 0;
+                startY = 0;
+                
+                if (selectionRect) {
+                    selectionRect.remove();
+                }
+                
+                // Создаем прямоугольник выделения
+                selectionRect = document.createElement('div');
+                selectionRect.className = 'selection-rect';
+                selectionRect.style.display = 'none';
+                overlayContainer.appendChild(selectionRect);
+                
+                debugPanel.querySelector('div:nth-child(2)').textContent = 'Кликните в ЛЕВЫЙ ВЕРХНИЙ угол области';
+                debugPanel.querySelector('div:nth-child(2)').style.color = '#ff0';
+                debugPanel.querySelector('div:nth-child(3)').textContent = 'Ожидание первого клика...';
+                
+                alert('🎯 РЕЖИМ ВЫДЕЛЕНИЯ АКТИВИРОВАН\n\n1. Кликните в ЛЕВЫЙ ВЕРХНИЙ угол области\n2. Кликните в ПРАВЫЙ НИЖНИЙ угол области');
+            }
+            
+            // 8. ОБРАБОТЧИК КЛИКА ПО ИЗОБРАЖЕНИЮ ДЛЯ ВЫДЕЛЕНИЯ
+            image.addEventListener('click', function(event) {
+                if (!isSelecting) return;
+                
+                event.preventDefault();
+                event.stopPropagation();
+                
+                const rect = image.getBoundingClientRect();
+                const x = Math.round(event.clientX - rect.left);
+                const y = Math.round(event.clientY - rect.top);
+                
+                clickCount++;
+                
+                if (clickCount === 1) {
+                    // Первый клик - левый верхний угол
+                    startX = x;
+                    startY = y;
+                    
+                    // Показываем точку
+                    const dot1 = document.createElement('div');
+                    dot1.className = 'debug-dot';
+                    dot1.style.left = (x - 4) + 'px';
+                    dot1.style.top = (y - 4) + 'px';
+                    dot1.style.backgroundColor = '#00ff00';
+                    dot1.title = `Точка 1: (${x}, ${y})`;
+                    overlayContainer.appendChild(dot1);
+                    
+                    debugPanel.querySelector('div:nth-child(2)').textContent = `Точка 1: [${x}, ${y}]`;
+                    debugPanel.querySelector('div:nth-child(3)').textContent = 'Теперь кликните в ПРАВЫЙ НИЖНИЙ угол';
+                    debugPanel.querySelector('div:nth-child(3)').style.color = '#ff0';
+                    
+                    console.log(`📌 Точка 1 (левый верхний): [${x}, ${y}]`);
+                    
+                } else if (clickCount === 2) {
+                    // Второй клик - правый нижний угол
+                    const endX = x;
+                    const endY = y;
+                    
+                    // Сортируем координаты (чтобы x1 < x2 и y1 < y2)
+                    const x1 = Math.min(startX, endX);
+                    const y1 = Math.min(startY, endY);
+                    const x2 = Math.max(startX, endX);
+                    const y2 = Math.max(startY, endY);
+                    
+                    const finalCoords = [x1, y1, x2, y2];
+                    
+                    // Показываем вторую точку
+                    const dot2 = document.createElement('div');
+                    dot2.className = 'debug-dot';
+                    dot2.style.left = (x - 4) + 'px';
+                    dot2.style.top = (y - 4) + 'px';
+                    dot2.style.backgroundColor = '#ff0000';
+                    dot2.title = `Точка 2: (${x}, ${y})`;
+                    overlayContainer.appendChild(dot2);
+                    
+                    // Показываем прямоугольник выделения
+                    selectionRect.style.left = x1 + 'px';
+                    selectionRect.style.top = y1 + 'px';
+                    selectionRect.style.width = (x2 - x1) + 'px';
+                    selectionRect.style.height = (y2 - y1) + 'px';
+                    selectionRect.style.display = 'block';
+                    
+                    // Показываем результат
+                    const width = x2 - x1;
+                    const height = y2 - y1;
+                    
+                    const resultText = `✅ ОБЛАСТЬ ОПРЕДЕЛЕНА!\n\nКоординаты: [${finalCoords.join(', ')}]\n\nШирина: ${width}px\nВысота: ${height}px\n\nСкопируйте массив для вашего кода:`;
+                    const codeExample = `{ name: 'НАЗВАНИЕ_МИРА', coords: [${finalCoords.join(', ')}], url: '#' }`;
+                    
+                    // Добавляем в панель
+                    const coordList = document.getElementById('ygg-coord-list');
+                    const coordItem = document.createElement('div');
+                    coordItem.className = 'ygg-coord-item';
+                    coordItem.innerHTML = `
+                        <div style="margin-bottom: 5px;">
+                            <strong style="color: #0ff">Область ${coordList.children.length + 1}</strong>
+                            <span style="float: right; font-size: 10px;">${width}×${height}px</span>
+                        </div>
+                        <div style="font-family: monospace; background: #222; padding: 5px; border-radius: 3px; margin-bottom: 5px;">
+                            [${finalCoords.join(', ')}]
+                        </div>
+                        <div style="font-size: 10px; color: #ccc; margin-bottom: 5px;">
+                            Левый верхний: (${x1}, ${y1})<br>
+                            Правый нижний: (${x2}, ${y2})
+                        </div>
+                    `;
+                    
+                    // Клик по элементу - копирование координат
+                    coordItem.addEventListener('click', function() {
+                        navigator.clipboard.writeText(`[${finalCoords.join(', ')}]`)
+                            .then(() => {
+                                alert(`✅ Координаты скопированы!\n\n[${finalCoords.join(', ')}]`);
+                            });
+                    });
+                    
+                    coordList.insertBefore(coordItem, coordList.firstChild);
+                    
+                    // Ограничиваем количество элементов
+                    if (coordList.children.length > 5) {
+                        coordList.removeChild(coordList.lastChild);
+                    }
+                    
+                    // Показываем большой алерт с координатами
+                    const userInput = prompt(
+                        resultText + '\n\n' + codeExample + '\n\nВведите название мира (или нажмите Отмена):',
+                        'ASGARD'
+                    );
+                    
+                    if (userInput) {
+                        // Обновляем метку на прямоугольнике
+                        const label = document.createElement('div');
+                        label.className = 'ygg-label';
+                        label.textContent = userInput;
+                        label.style.color = '#0ff';
+                        label.style.borderColor = '#0ff';
+                        label.style.left = x1 + 'px';
+                        label.style.top = (y1 - 20) + 'px';
+                        overlayContainer.appendChild(label);
+                    }
+                    
+                    // Сбрасываем режим выделения
+                    isSelecting = false;
+                    debugPanel.querySelector('div:nth-child(2)').textContent = '1. Кликните в ЛЕВЫЙ ВЕРХНИЙ угол';
+                    debugPanel.querySelector('div:nth-child(3)').textContent = '2. Кликните в ПРАВЫЙ НИЖНИЙ угол';
+                    debugPanel.querySelector('div:nth-child(2)').style.color = '#0ff';
+                    debugPanel.querySelector('div:nth-child(3)').style.color = '#0ff';
+                    
+                    // Автоудаление точек через 10 секунд
+                    setTimeout(() => {
+                        const dots = overlayContainer.querySelectorAll('.debug-dot');
+                        dots.forEach(dot => dot.remove());
+                        if (selectionRect) selectionRect.remove();
+                    }, 10000);
+                    
+                    console.log(`🎯 Область определена: [${finalCoords.join(', ')}] (${width}×${height}px)`);
+                }
+            });
+            
+            // 9. Перехватываем клики по существующим областям для отладки
+            const areaElements = document.querySelectorAll('area');
+            areaElements.forEach((areaElement, index) => {
+                const area = areas[index];
+                if (!area) return;
+                
+                areaElement.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const coords = area.coords;
+                    const width = coords[2] - coords[0];
+                    const height = coords[3] - coords[1];
+                    
+                    // Показываем информацию о существующей области
+                    alert(`📌 Существующая область: ${area.name}\n\nКоординаты: [${coords.join(', ')}]\n\nРазмер: ${width}×${height}px`);
+                    
+                    // Подсвечиваем область
+                    const overlays = document.querySelectorAll('.ygg-overlay');
+                    if (overlays[index]) {
+                        overlays[index].style.boxShadow = `0 0 20px ${areaColors[area.name] || '#FFF'}`;
+                        setTimeout(() => {
+                            overlays[index].style.boxShadow = 'none';
+                        }, 2000);
+                    }
+                });
+            });
+            
+            // 10. Кнопки управления
+            document.getElementById('ygg-start-btn').addEventListener('click', function() {
+                startAreaSelection();
+                debugPanel.style.display = 'block';
+            });
+            
+            document.getElementById('ygg-clear-btn').addEventListener('click', function() {
+                // Удаляем все точки и прямоугольник выделения
+                const dots = overlayContainer.querySelectorAll('.debug-dot');
+                dots.forEach(dot => dot.remove());
+                
+                if (selectionRect) {
+                    selectionRect.remove();
+                    selectionRect = null;
+                }
+                
+                // Очищаем список координат
+                document.getElementById('ygg-coord-list').innerHTML = '';
+                
+                // Сбрасываем режим
+                isSelecting = false;
+                clickCount = 0;
+                
+                debugPanel.querySelector('div:nth-child(2)').textContent = '1. Кликните в ЛЕВЫЙ ВЕРХНИЙ угол';
+                debugPanel.querySelector('div:nth-child(3)').textContent = '2. Кликните в ПРАВЫЙ НИЖНИЙ угол';
+                debugPanel.querySelector('div:nth-child(2)').style.color = '#0ff';
+                debugPanel.querySelector('div:nth-child(3)').style.color = '#0ff';
+                
+                console.log('🧹 Все выделения очищены');
+            });
+            
+            // 11. Показываем панель при загрузке
+            debugPanel.style.display = 'block';
+            
+            console.log('🎯 Режим определения областей готов к работе!');
+            console.log('Нажмите "Начать выделение" и кликайте по изображению.');
+        });
+    </script>
+</body>
+</html>

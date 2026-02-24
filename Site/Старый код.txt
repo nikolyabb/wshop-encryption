@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Best site in the world</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <div class="wrapper">
+        <header class="container">
+            <span class="logo">Yggdrasil</span>
+            <nav>
+                <ul>
+                    <li class="active"><a href="#">Hús</a></li>
+                    <li><a href="#">soon</a></li>
+                    <li class="btn"><a href="#">um Okkur</a></li>
+                </ul>
+            </nav>
+
+            <style>
+                body {
+                    background-image: url('https://i.imgur.com/Leci3br.png');
+                    background-size: cover;
+                    background-repeat: no-repeat;
+                    background-position: center;
+                    background-attachment: fixed;
+                    margin: 0;
+                    min-height: 100vh;
+                }
+            </style>
+        </header>
+
+        <div class="hero_container">
+            <div class="hero--info"></div>
+            <h2>Óðinn verndar þig</h2>
+            <h1>Hlið níu heima eru opin fyrir þér</h1>
+            <p>Ég mun verða leiðsögumaður þinn</p>
+            <button class="btn">Detalis</button>
+        </div>
+        
+        <!-- Убрал дублирующее изображение, оставил только кликабельное -->
+        <!-- <img src="img/Yggdrasil.png" alt=""> -->
+    </div>
+
+    <!-- Кликабельное изображение -->
+    <img id="clickable-image" src="img/Yggdrasil.png" alt="Yggdrasil Map" usemap="#image-map">
+    <map name="image-map">
+        <!-- Здесь будут области -->
+    </map>
+
+    <!-- Добавляем JavaScript код для карты -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const image = document.getElementById('clickable-image');
+            const map = document.querySelector('map[name="image-map"]');
+            
+            // Области для клика (координаты нужно подобрать под ваше изображение)
+            const areas = [
+                { 
+                    name: 'ASGARD',
+                    coords: [100, 50, 200, 150], // x1,y1,x2,y2
+                    url: '/asgard.html'
+                },
+                { 
+                    name: 'MIDGARD',
+                    coords: [300, 50, 100, 150],
+                    url: 'midgard.html'
+                },
+                { 
+                    name: 'MUSPELHEIM',
+                    coords: [462, 100, 100, 200],
+                    url: '/muspelheim.html'
+                },
+                { 
+                    name: 'VANAHEIM',
+                    coords: [150, 300, 250, 400],
+                    url: '/vanaheim.html'
+                },
+                { 
+                    name: 'HELHEIM',
+                    coords: [400, 400, 500, 500],
+                    url: '/helheim.html'
+                }
+            ];
+
+            // Создаем области на карте
+            areas.forEach(area => {
+                const areaElement = document.createElement('area');
+                areaElement.shape = 'rect';
+                areaElement.coords = area.coords.join(',');
+                areaElement.alt = area.name;
+                areaElement.href = area.url;
+                map.appendChild(areaElement);
+            });
+            
+            console.log('Карта миров Yggdrasil активирована!');
+
+            image.addEventListener('click', function(event) {
+    // 1. Получаем положение изображения на странице
+    const rect = image.getBoundingClientRect();
+    
+    // 2. Вычисляем координаты клика ОТНОСИТЕЛЬНО изображения
+    const x = Math.round(event.clientX - rect.left);
+    const y = Math.round(event.clientY - rect.top);
+    
+    // 3. Показываем результат
+    console.log(`Координаты: x=${x}, y=${y}`);
+    
+    // 4. Можно вывести alert для удобства
+    alert(`Клик: x=${x}, y=${y}\n\nСкопируйте эти числа в массив areas:\n[x, y, x+ширина, y+высота]`);
+    
+    // 5. Визуальная обратная связь (опционально)
+    const dot = document.createElement('div');
+    dot.style.position = 'absolute';
+    dot.style.left = (event.clientX - 5) + 'px';
+    dot.style.top = (event.clientY - 5) + 'px';
+    dot.style.width = '10px';
+    dot.style.height = '10px';
+    dot.style.backgroundColor = 'red';
+    dot.style.borderRadius = '50%';
+    dot.style.pointerEvents = 'none';
+    document.body.appendChild(dot);
+    
+    // Автоудаление точки через 2 секунды
+    setTimeout(() => dot.remove(), 2000);
+});
+            
+            // Дополнительный код для отладки (узнать координаты кликов)
+            // Раскомментируйте для тестирования:
+            /*
+            image.addEventListener('click', function(e) {
+                const rect = this.getBoundingClientRect();
+                const x = Math.round(e.clientX - rect.left);
+                const y = Math.round(e.clientY - rect.top);
+                console.log(`Клик в координатах: x=${x}, y=${y}`);
+                alert(`Клик: x=${x}, y=${y}\nСкопируйте эти координаты для areas[]`);
+            });
+            */
+        });
+    </script>
+</body>
+</html>

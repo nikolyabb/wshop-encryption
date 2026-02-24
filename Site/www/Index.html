@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Best site in the world</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <div class="wrapper">
+        <header class="container">
+            
+            <span class="logo">Yggdrasil
+
+<label for="language"></label>
+<select id="language" name="language" class="language-select">
+    <option value="index.html" selected>Íslenska</option>
+    <option value="SiteEng.html">English</option>
+    <option value="SiteRu.html">Русский</option>
+</select>
+<style>
+    body {
+        list-style: none;
+    }
+</style>
+            </span>
+
+
+            <nav>
+                <ul>
+                    <li class="active"><a href="#">Hús</a></li>
+                    <li><a href="#">soon</a></li>
+                    <li class="btn"><a href="#">um Okkur</a></li>
+                    
+                </ul>
+     <div class="dropdown">
+  <li class="btn"> </li>
+  <ul class="dropdown-content">
+    <!-- <li><a href="#">Íslenska</a></li>
+    <li><a href="#">English</a></li>
+    <li><a href="#">Русский</a></li> -->
+  </ul>
+</div>
+
+            </nav>
+
+            <style>
+                body {
+                    background-image: url('https://i.imgur.com/Leci3br.png');
+                    background-size: cover;
+                    background-repeat: no-repeat;
+                    background-position: center;
+                    background-attachment: fixed;
+                    margin: 0;
+                    min-height: 100vh;
+                    
+                }
+            </style>
+        </header>
+
+        <div class="hero_container">
+            <div class="hero--info"></div>
+            <h2>Óðinn verndar þig</h2>
+            <h1>Hlið níu heima eru opin fyrir þér</h1>
+            <p>Ég mun verða leiðsögumaður þinn</p>
+            
+        </div>
+        
+       
+    </div>
+
+    <!-- Кликабельное изображение -->
+    <img id="clickable-image" src="img/Yggdrasil.png" alt="Yggdrasil Map" usemap="#image-map">
+    <map name="image-map">
+        <!-- Здесь будут области -->
+    </map>
+
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const image = document.getElementById('clickable-image');
+            const map = document.querySelector('map[name="image-map"]');
+            
+           
+            const areas = [
+                { 
+                    name: 'ASGARD',
+                    coords: [272, 265, 379, 289], // x1,y1,x2,y2
+                    url: 'asgard.html'
+                },
+                { 
+                    name: 'MIDGARD',
+                    coords: [200, 401, 325, 423],
+                    url: 'midgard.html'
+                },
+                { 
+                    name: 'MUSPELHEIM',
+                    coords: [404, 351, 539, 387],
+                    url: 'muspelheim.html'
+                },
+                { 
+                    name: 'VANAHEIM',
+                    coords: [10, 489, 116, 515],
+                    url: 'vanaheim.html'
+                },
+                { 
+                    name: 'HELHEIM',
+                    coords: [401, 591, 521, 630],
+                    url: 'helheim.html'
+                },
+
+                {
+                    name : 'JOTUNHEIM',
+                    coords:[11, 621, 136, 648],
+                    url: 'jotunheim.html'
+                },
+
+                {
+                    name: 'ALFHEIM',
+                    coords:[20, 375, 142, 401],
+                    url: 'alfheim.html'
+                },
+
+                {
+                   name: 'NIFLHEIM',
+                   coords:[272, 639, 389, 674],
+                   url: 'niflheim.html'
+                },
+
+                {
+                  name: 'NIDAVELLIR',
+                  coords:[435, 496, 542, 523],
+                  url: 'nidavellir.html'
+                }
+            ];
+
+            // Создаем области на карте
+            areas.forEach(area => {
+                const areaElement = document.createElement('area');
+                areaElement.shape = 'rect';
+                areaElement.coords = area.coords.join(',');
+                areaElement.alt = area.name;
+                areaElement.href = area.url;
+                map.appendChild(areaElement);
+            });
+            
+            console.log('Карта миров Yggdrasil активирована!');
+
+            image.addEventListener('click', function(event) {
+                // 1. Получаем положение изображения на странице
+                const rect = image.getBoundingClientRect();
+                
+                // 2. Вычисляем координаты клика ОТНОСИТЕЛЬНО изображения
+                const x = Math.round(event.clientX - rect.left);
+                const y = Math.round(event.clientY - rect.top);
+                
+                // 3. Показываем результат
+                console.log(`Координаты: x=${x}, y=${y}`);
+            }); 
+            
+           window.open("file:///C:/Site/www/Index.html", "_blank", "scrollbars=no");
+        }); 
+
+        // Обработчик для языкового переключателя
+document.getElementById('language').addEventListener('change', function() 
+{
+const selectedLanguage = this.value;
+
+if (selectedLanguage && selectedLanguage !== '') 
+{
+    window.location.href = selectedLanguage;
+}
+})
+    </script>
+</body>
+</html>

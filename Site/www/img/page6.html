@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encryptor - Команда шифровальщиков</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: #0a0a0a;
+            color: #96E396;
+            font-family: 'Inter', sans-serif;
+            padding: 40px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        input, button {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            background: transparent;
+            border: 1px solid #96E396;
+            color: #96E396;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+        button:hover {
+            background: #96E396;
+            color: black;
+            box-shadow: 0 0 20px #96E396;
+        }
+        .status {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #96E396;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔐 Команда шифровальщиков</h1>
+        
+        <input type="text" id="topicInput" placeholder="Тема задания">
+        <input type="text" id="wordInput" placeholder="Слово для шифрования">
+        <button onclick="encryptAndSend()">Зашифровать и отправить</button>
+        
+        <div class="status" id="status">Введите слово и нажмите кнопку</div>
+        <div class="status" id="result"></div>
+    </div>
+
+    <script>
+        const ws = new WebSocket('ws://localhost:3000');
+        const statusDiv = document.getElementById('status');
+        
+        ws.onopen = () => {
+            statusDiv.textContent = '✅ Подключено к серверу';
+        };
+
+        function caesarCipher(text, shift = 3) {
+            return text.split('').map(char => {
+                if (char.match(/[a-z]/i)) {
+                    const code = char.charCodeAt(0);
+                    const base = code >= 65 && code <= 90 ? 65 : 97;
+                    return String.fromCharCode(((code - base + shift) % 26) + base);
+                }
+                return char;
+            }).join('');
+        }
+
+        function encryptAndSend() {
+            const topic = document.getElementById('topicInput').value.trim();
+            const word = document.getElementById('wordInput').value.trim();
+            
+            if (!word) {
+                alert('Введите слово для шифрования');
+                return;
+            }
+            
+            const encrypted = caesarCipher(word);
+            
+            document.getElementById('result').textContent = 
+                `Зашифровано: ${encrypted}`;
+            
+            ws.send(JSON.stringify({
+                type: 'new_task',
+                topic: topic || 'Без темы',
+                encrypted: encrypted
+            }));
+            
+            statusDiv.textContent = '📤 Задание отправлено дешифровщикам!';
+            
+            // Очищаем поля
+            document.getElementById('wordInput').value = '';
+        }
+    </script>
+</body>
+</html>
