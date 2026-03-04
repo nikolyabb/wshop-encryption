@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encrypting</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="new.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playwrite+IN+Guides&display=swap" rel="stylesheet">
+    <style> 
+    .input::placeholder {
+    color: #96E396;  
+         
+}
+       
+
+       .content {
+   margin-top: 10%;
+    padding: 60px 100px; 
+    justify-content: center;
+    display: flex;
+
+}
+
+#encryption input {
+    width: 367px; 
+    padding: 15px;
+    font-size: 18px;
+}
+
+
+
+        .input {
+            border-radius: 5px;
+            background-color:transparent;
+            color:#96E396; 
+        }
+
+        .instruction {
+            display: flex;
+            justify-content: center;
+            color:#96E396; 
+            margin-right : 8%;
+        }
+      
+
+    </style>
+<body>
+    
+    <div class="video-background">
+        <video id="bg-video" autoplay muted loop playsinline>
+            
+            <source src="backgrvideo3.mp4" type="video/mp4">
+            
+            <img src="https://www.htmlhints.com/image/other/encryptDecrypt.jpeg" alt="Fallback image">
+        </video>
+        <div class="video-overlay"></div>
+    </div>
+
+   <div class ='content'> 
+
+<form id="encryption">  
+
+    <input type ='number' class ='input' name='info1' placeholder="Type the key" autocomplete="off"> <br>
+
+<input type ='text' class ='input' name='info' placeholder="Type the word you'd like to encrypt" autocomplete="off">
+
+<button type ='submit'> Confirm
+</button>
+<br> <input type="text" id="resultField" class="input" placeholder="" disabled autocomplete="off">
+</form>
+
+   </div>
+
+   <div class = "instruction"> 
+    1. Set encryption key (any number)<br>
+    2. Type the word and each letter will be shifted by the key value
+   </div>
+<script> 
+
+let element = document.querySelector('input[type="text"]'); 
+
+const colors = ['red', 'blue', 'green', 'purple', 'orange'];
+let colorIndex = 0;
+
+document.body.addEventListener('input', function(e) {
+    colorIndex = (colorIndex + 1) % colors.length;
+    element.style.color = colors[colorIndex];
+});
+
+let element1 = document.querySelector('input[type="number"]'); 
+
+const colors1 = ['red', 'blue', 'green', 'purple', 'orange'];
+let colorIndex1 = 0;
+
+document.body.addEventListener('input', function(e) {
+    colorIndex1 = (colorIndex1 + 1) % colors1.length;
+    element1.style.color = colors1[colorIndex];
+});
+
+
+function caesarCipher(text, shift) {
+    let result = '';
+    
+    for (let i = 0; i < text.length; i++) {
+        let char = text[i];
+        
+        
+        if (char.match(/[a-z]/i)) {
+           
+            let code = text.charCodeAt(i);
+            
+            
+            if (code >= 65 && code <= 90) {
+                char = String.fromCharCode(((code - 65 + shift) % 26) + 65);
+            }
+            
+            else if (code >= 97 && code <= 122) {
+                char = String.fromCharCode(((code - 97 + shift) % 26) + 97);
+            }
+        }
+        
+        result += char;
+    }
+    
+    return result;
+}
+
+const form = document.forms.encryption;
+
+form.addEventListener("submit", function(e) { 
+    e.preventDefault();
+    let numberElement = document.querySelector('input[type="number"]')
+    let value = numberElement.value;
+    let input = document.querySelector('input');
+    let inputField = document.querySelector('input[name="info"]');
+    let resultField = document.getElementById('resultField');
+    
+   
+    
+    let encryptedText = caesarCipher(inputField.value, value);
+    
+   
+    resultField.value = encryptedText;
+
+    resultField.style.color = '#96E396';
+
+let continuationText = document.getElementById('continuetext') 
+
+if (!continuationText) {
+    continuationText = document.createElement('div');
+    continuationText.innerHTML = 'Click here if you want to practice your decryption';
+    continuationText.id = 'continuetext';
+    continuationText.style.color = '#96E396';
+    continuationText.style.display = 'flex';
+    continuationText.style.justifyContent = 'center'; 
+    continuationText.style.marginRight = '14%'; 
+    continuationText.style.marginTop = '1%'; 
+    document.body.appendChild(continuationText);
+}
+
+
+ let continuationButton = document.getElementById('continuebutton');
+       
+    
+   
+    if (!continuationButton) {
+    let link = document.createElement('a');
+    link.href='page3.html';
+    link.style.textDecoration = 'none';
+    continuationButton = document.createElement('button');
+    continuationButton.innerHTML = 'Decrypt';
+    continuationButton.style.color = '#96E396';
+    continuationButton.id = 'continuebutton';
+    continuationButton.type = 'button';
+    continuationButton.style.display = 'flex';
+    continuationButton.style.justifyContent = 'center'; 
+    continuationButton.style.marginLeft = '58.5%'; 
+    continuationButton.style.marginTop = '1%'; 
+
+    document.body.appendChild(continuationButton);
+    link.appendChild(continuationButton);
+    document.body.appendChild(link);
+}
+   
+});
+</script>
