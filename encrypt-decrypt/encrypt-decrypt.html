@@ -7,18 +7,14 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="new.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playwrite+IN+Guides&display=swap" rel="stylesheet">
     
     <style>
-        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
-        
         
         body {
             font-family: "Inter", sans-serif;
@@ -26,28 +22,35 @@
             color: white;
             margin: 0;
             padding: 0;
-            overflow-x: hidden;
-            position: relative;
             min-height: 100vh;
+            background-image: url('backgr.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         
-        
         .content {
-            position: relative;
-            z-index: 1;
             text-align: center;
-            padding-top: 40vh; 
-            color: gray;
+            z-index: 1;
+        }
+        
+        .message {
+            font-size: 24px;
+            margin-bottom: 30px;
+            color: #a72188;
+            opacity: 0.9;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
         
-        
         .btn-shine {
             display: inline-block;
-            margin-top: 30px;
             padding: 12px 48px;
-            color: #fff;
-            background: linear-gradient(to right, #9f9f9f 0, #fff 10%, #868686 20%);
+            color: #ff00c3;
+            background: linear-gradient(to right, #a72188 0, #ffffff 10%, #a72188 20%);
             background-position: 0;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -60,6 +63,7 @@
             border: 2px solid rgba(255, 255, 255, 0.3);
             border-radius: 5px;
             transition: all 0.3s ease;
+            cursor: pointer;
         }
         
         .btn-shine:hover {
@@ -72,38 +76,14 @@
             60% { background-position: 180px; }
             100% { background-position: 180px; }
         }
-        
-        
-        .message {
-            font-size: 24px;
-            margin-bottom: 20px;
-            color: #fff;
-            opacity: 0.9;
-        }
-
-          body {
-                    background-image: url('backgrvideo2.gif');
-                    background-size: cover;
-                    background-repeat: no-repeat;
-                    background-position: center;
-                    background-attachment: fixed;
-                    margin: 0;
-                    min-height: 100vh;
-                    
-                }
     </style>
 </head>
 <body>
-
     <div class="content">
         <div class="message">
-            Do you want to learn encryption?<br>
+            Do you want to learn encryption?
         </div>
         <a href="page2.html" class="btn-shine">Let's begin</a>
     </div>
-
-    <script>
-      
-    </script>
 </body>
 </html>

@@ -3,27 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Decrypting</title>
+    <title>Encrypting</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="new.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playwrite+IN+Guides&display=swap" rel="stylesheet">
     <style> 
-
     .input::placeholder {
-    color: #96E396;  
-       
+    color: #a72188;  
+         
 }
        
+       
+   
 
-        .content {
-   margin-top: 10%;
-    padding: 60px 100px; 
-    justify-content: center;
-    display: flex;
-
-}
 #encryption input {
     width: 367px; 
     padding: 15px;
@@ -32,41 +26,41 @@
 
 
 
-       .input {
+        .input {
             border-radius: 5px;
             background-color:transparent;
-            color:#96E396; 
+            color:#a72188; 
         }
 
         .instruction {
             display: flex;
             justify-content: center;
-            color:#96E396; 
-            margin-right : 7%;
+            color:#a72188; 
+            margin-right : 8%;
         }
       
-        
-
+.image-background {
+    background-repeat: no-repeat;
+    background-size: cover;
+}
     </style>
 <body>
     
-    <div class="video-background">
-        <video id="bg-video" autoplay muted loop playsinline>
+    <div class="img-background">
+       
             
-            <source src="backgrvideo4.mp4" type="video/mp4">
-            
-            <img src="https://www.htmlhints.com/image/other/encryptDecrypt.jpeg" alt="Fallback image">
-        </video>
-        <div class="video-overlay"></div>
+            <img src="backgr.jpg" alt="Fallback image">
+      
+
     </div>
 
-     <div class ='content'> 
+   <div class ='content'> 
 
 <form id="encryption">  
 
     <input type ='number' class ='input' name='info1' placeholder="Type the key" autocomplete="off"> <br>
 
-<input type ='text' class ='input' name='info' placeholder="Type the word you'd like to decrypt" autocomplete="off">
+<input type ='text' class ='input' name='info' placeholder="Type the word you'd like to encrypt" autocomplete="off">
 
 <button type ='submit'> Confirm
 </button>
@@ -74,11 +68,14 @@
 </form>
 
    </div>
-    <div class = "instruction"> 
-    1. Set decryption key (any number)<br>
-    2. Type the word and each letter will be shifted back by the key value
+
+   <div class = "instruction"> 
+    1. Set encryption key (any number)<br>
+    2. Type the word and each letter will be shifted by the key value
    </div>
+   </body>
 <script> 
+
 let element = document.querySelector('input[type="text"]'); 
 
 const colors = ['red', 'blue', 'green', 'purple', 'orange'];
@@ -139,13 +136,50 @@ form.addEventListener("submit", function(e) {
     
    
     
-    let decryptedText = caesarCipher(inputField.value, -value);
+    let encryptedText = caesarCipher(inputField.value, value);
     
+   
+    resultField.value = encryptedText;
+
+    resultField.style.color = '#a72188';
+
+let continuationText = document.getElementById('continuetext') 
+
+if (!continuationText) {
+    continuationText = document.createElement('div');
+    continuationText.innerHTML = 'Click here if you want to practice your decryption';
+    continuationText.id = 'continuetext';
+    continuationText.style.color = '#a72188';
+    continuationText.style.display = 'flex';
+    continuationText.style.justifyContent = 'center'; 
+    continuationText.style.marginRight = '14%'; 
+    continuationText.style.marginTop = '1%'; 
+    document.body.appendChild(continuationText);
+}
+
+
+ let continuationButton = document.getElementById('continuebutton');
+       
     
+   
+    if (!continuationButton) {
+    let link = document.createElement('a');
+    link.href='page3.html';
+    link.style.textDecoration = 'none';
+    continuationButton = document.createElement('button');
+    continuationButton.innerHTML = 'Decrypt';
+    continuationButton.style.color = '#a72188';
+    continuationButton.id = 'continuebutton';
+    continuationButton.type = 'button';
+    continuationButton.style.display = 'flex';
+    continuationButton.style.justifyContent = 'center'; 
+    continuationButton.style.marginLeft = '58.5%'; 
+    continuationButton.style.marginTop = '1%'; 
 
-    resultField.value = decryptedText;
-
-    resultField.style.color = '#96E396';
-
+    document.body.appendChild(continuationButton);
+    link.appendChild(continuationButton);
+    document.body.appendChild(link);
+}
+   
 });
 </script>
