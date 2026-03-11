@@ -16,16 +16,11 @@
          
 }
        
-       
-   
-
 #encryption input {
     width: 367px; 
     padding: 15px;
     font-size: 18px;
 }
-
-
 
         .input {
             border-radius: 5px;
@@ -43,13 +38,6 @@
     padding: 10px;      
 }
       
-.image-background {
-    background-repeat: no-repeat;
-    background-size: cover;
-}
-
- 
-
     </style>
 <body>
     
@@ -58,7 +46,6 @@
             
             <img src="backgr.jpg" alt="Fallback image">
       
-
     </div>
 
      <div class ='content'> 
@@ -76,7 +63,6 @@
             >
             <output id="int-range-output" class="instruction">0</output>
           
-
 <input type ='text' class ='input' name='info' placeholder="Type the word you'd like to decrypt" autocomplete="off">
 
 <button type ='submit'> Confirm
@@ -92,8 +78,6 @@
 const params = new URLSearchParams(window.location.search);
 const shiftFromUrl = parseInt(params.get('shift'), 10) || 0;
 
-
-
 const slider = document.getElementById('int-range');
 const out = document.getElementById('int-range-output');
 
@@ -105,7 +89,6 @@ if (slider) {
         out.textContent = slider.value;
     });
 }
-
 
 function caesarCipher(text, shift) {
     let result = '';
@@ -131,7 +114,6 @@ function caesarCipher(text, shift) {
     return result;
 }
 
-
 const form = document.forms.encryption;
 
 form.addEventListener("submit", function(e) { 
@@ -139,11 +121,7 @@ form.addEventListener("submit", function(e) {
     
     let inputField = document.querySelector('input[name="info"]');
     let resultField = document.getElementById('resultField');
-    
-    
     let decryptedText = caesarCipher(inputField.value, -shiftFromUrl);
-    
     resultField.value = decryptedText;
-    
 });
 </script>
