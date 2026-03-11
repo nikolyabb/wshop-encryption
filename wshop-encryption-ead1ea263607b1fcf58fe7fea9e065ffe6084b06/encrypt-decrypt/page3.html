@@ -65,7 +65,17 @@
 
 <form id="encryption">  
 
-    <input type ='number' class ='input' name='info1' placeholder="Type the key" autocomplete="off"> <br>
+    <input 
+                type="range"
+                id="int-range"  
+                name="info1"
+                min="-4"
+                max="4"
+                step="1"
+                value="0"
+            >
+            <output id="int-range-output" class="instruction">0</output>
+          
 
 <input type ='text' class ='input' name='info' placeholder="Type the word you'd like to decrypt" autocomplete="off">
 
@@ -75,49 +85,41 @@
 </form>
 
    </div>
-    <div class = "instruction"> 
-    1. Set decryption key (any number)<br>
-    2. Type the word and each letter will be shifted back by the key value
-   </div>
+    
    </body>
-<script> 
-let element = document.querySelector('input[type="text"]'); 
+<script>
 
-const colors = ['red', 'blue', 'green', 'purple', 'orange'];
-let colorIndex = 0;
+const params = new URLSearchParams(window.location.search);
+const shiftFromUrl = parseInt(params.get('shift'), 10) || 0;
 
-document.body.addEventListener('input', function(e) {
-    colorIndex = (colorIndex + 1) % colors.length;
-    element.style.color = colors[colorIndex];
-});
 
-let element1 = document.querySelector('input[type="number"]'); 
 
-const colors1 = ['red', 'blue', 'green', 'purple', 'orange'];
-let colorIndex1 = 0;
+const slider = document.getElementById('int-range');
+const out = document.getElementById('int-range-output');
 
-document.body.addEventListener('input', function(e) {
-    colorIndex1 = (colorIndex1 + 1) % colors1.length;
-    element1.style.color = colors1[colorIndex];
-});
+if (slider) {
+    slider.value = shiftFromUrl;
+    out.textContent = shiftFromUrl;
+    
+    slider.addEventListener('input', () => {
+        out.textContent = slider.value;
+    });
+}
 
 
 function caesarCipher(text, shift) {
     let result = '';
+    shift = ((shift % 26) + 26) % 26;
     
     for (let i = 0; i < text.length; i++) {
         let char = text[i];
         
-        
         if (char.match(/[a-z]/i)) {
-           
             let code = text.charCodeAt(i);
-            
             
             if (code >= 65 && code <= 90) {
                 char = String.fromCharCode(((code - 65 + shift) % 26) + 65);
             }
-            
             else if (code >= 97 && code <= 122) {
                 char = String.fromCharCode(((code - 97 + shift) % 26) + 97);
             }
@@ -129,28 +131,19 @@ function caesarCipher(text, shift) {
     return result;
 }
 
+
 const form = document.forms.encryption;
 
 form.addEventListener("submit", function(e) { 
     e.preventDefault();
-    let numberElement = document.querySelector('input[type="number"]')
-    let value = numberElement.value;
-    let input = document.querySelector('input');
+    
     let inputField = document.querySelector('input[name="info"]');
     let resultField = document.getElementById('resultField');
     
-   
     
-    let decryptedText = caesarCipher(inputField.value, -value);
+    let decryptedText = caesarCipher(inputField.value, -shiftFromUrl);
     
-    
-
     resultField.value = decryptedText;
-
-    resultField.style.color = '#a72188';
-
-
-
-   
+    
 });
 </script>

@@ -102,15 +102,7 @@ input[type="button"] {
     color: #a72188;     
 }
 
-.instruction {
-    display: flex;
-    justify-content: center;
-    color: #a72188; 
-    margin-right: 8%;
-    position: relative;  
-    z-index: 10;         
-    padding: 10px;      
-}
+
 
     .content {
    margin-top: 10%;
@@ -118,4 +110,15 @@ input[type="button"] {
     justify-content: center;
     display: flex;
 
+}
+
+#int-range-output {
+    display: block;
+    width: 100%;
+    text-align: center;
+    color: #a72188;
+    font-size: 18px;
+    margin-top: 5px;
+    position: relative;
+    z-index: 10;
 }
