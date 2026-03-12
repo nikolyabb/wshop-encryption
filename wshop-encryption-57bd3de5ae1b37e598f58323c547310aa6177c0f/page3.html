@@ -12,14 +12,15 @@
     <style> 
 
     .input::placeholder {
-    color: #a72188;  
+    color: #a72188; 
+    font-size: 25px;  
          
 }
        
-#encryption input {
-    width: 367px; 
+#decryption input {
+    width: 450px; 
     padding: 15px;
-    font-size: 18px;
+    font-size: 25px;
 }
 
         .input {
@@ -28,15 +29,7 @@
             color:#a72188; 
         }
 
-      .instruction {
-    display: flex;
-    justify-content: center;
-    color: #a72188; 
-    margin-left: 2%;
-    position: relative;  
-    z-index: 10;         
-    padding: 10px;      
-}
+      
       
     </style>
 <body>
@@ -50,7 +43,7 @@
 
      <div class ='content'> 
 
-<form id="encryption">  
+<form id="decryption">  
 
     <input 
                 type="range"
@@ -65,15 +58,32 @@
           
 <input type ='text' class ='input' name='info' placeholder="Type the word you'd like to decrypt" autocomplete="off">
 
-<button type ='submit'> Confirm
-</button>
+
 <br> <input type="text" id="resultField" class="input" placeholder="" disabled autocomplete="off">
+
+<div class="spacer"></div>
+
+<button type ='submit'> Confirm
+
+</button>
+
 </form>
 
    </div>
-    
+    <div class ='author'>
+    Desgined by Aleksei Novashov, 2026 (c) for Insight School
+</div>
    </body>
 <script>
+let element = document.querySelector('input[type="text"]');
+
+const colors = ['red', 'blue', 'green', 'purple', 'orange'];
+let colorIndex = 0;
+
+document.body.addEventListener('input', function(e) {
+    colorIndex = (colorIndex + 1) % colors.length;
+    element.style.color = colors[colorIndex];
+});
 
 const params = new URLSearchParams(window.location.search);
 const shiftFromUrl = parseInt(params.get('shift'), 10) || 0;
@@ -114,14 +124,14 @@ function caesarCipher(text, shift) {
     return result;
 }
 
-const form = document.forms.encryption;
+const form = document.forms.decryption;
 
 form.addEventListener("submit", function(e) { 
     e.preventDefault();
     
     let inputField = document.querySelector('input[name="info"]');
     let resultField = document.getElementById('resultField');
-    let decryptedText = caesarCipher(inputField.value, -shiftFromUrl);
+    let decryptedText = caesarCipher(inputField.value, -slider.value);
     resultField.value = decryptedText;
 });
 </script>

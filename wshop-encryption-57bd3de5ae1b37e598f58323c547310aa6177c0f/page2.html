@@ -16,41 +16,25 @@
 
 <style>
 
-#int-range-output {
-    color: #a72188;
-    font-size: 18px;
-    display: block;
-    text-align: center;
-    margin: 5px auto;
-    width: 100%;
+  .input::placeholder {
+    color: #a72188; 
+    font-size: 25px; 
+         
 }
-
-.input::placeholder {
-    color: #a72188;
-}
-
-#encryption {
-    left: auto;
-    right: auto;
-    transform: none;
-}
-
+       
 #encryption input {
-    width: 367px;
+    width: 450px; 
     padding: 15px;
-    font-size: 18px;
+    font-size: 25px;
 }
 
+        .input {
+            border-radius: 5px;
+            background-color:transparent;
+            color:#a72188; 
+        }
 
-
-.input {
-    border-radius: 5px;
-    background-color: transparent;
-    color: #a72188;
-}
-
-
-
+      
 </style>
 </head>
 
@@ -87,9 +71,7 @@
     autocomplete="off"
 >
 
-<button type="submit">
-    Confirm
-</button>
+
 
 <br>
 
@@ -101,11 +83,23 @@
     disabled
     autocomplete="off"
 >
+    <div class="spacer"></div>
+<button type="submit">
+    Confirm
+     
+     
+</button>
 
 </form>
-</div>
 
+<div class ='author'>
+    Desgined by Aleksei Novashov, 2026 (c) for Insight School
+</div>
 </body>
+
+
+
+
 
 
 <script>
@@ -194,10 +188,12 @@ form.addEventListener("submit", function(e) {
         continuationText.id = 'continuetext';
 
         continuationText.style.color = '#a72188';
+        
         continuationText.style.display = 'flex';
+
         continuationText.style.justifyContent = 'center';
-        continuationText.style.marginRight = '14%';
-        continuationText.style.marginTop = '1%';
+
+        continuationText.style.fontSize = '25px';
 
         document.body.appendChild(continuationText);
     }
@@ -216,13 +212,16 @@ form.addEventListener("submit", function(e) {
         continuationButton = document.createElement('button');
 
         continuationButton.innerHTML = 'Decrypt';
+
         continuationButton.style.color = '#a72188';
+
         continuationButton.id = 'continuebutton';
+
         continuationButton.type = 'button';
+
         continuationButton.style.display = 'flex';
+
         continuationButton.style.justifyContent = 'center';
-        continuationButton.style.marginLeft = '58.5%';
-        continuationButton.style.marginTop = '1%';
 
         document.body.appendChild(continuationButton);
 
